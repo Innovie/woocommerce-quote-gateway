@@ -42,13 +42,13 @@ add_action( 'plugins_loaded', 'openedge_quote_gateway_load', 0 );
 function openedge_my_account_quote( $actions = NULL, $order = NULL ) {
     global $woocommerce;
 
-    $gateway = wc_get_payment_gateway_by_order($order->id);
+    $gateway = wc_get_payment_gateway_by_order($order->get_id());
 
     if ($gateway && $gateway->id == 'quote') :
      
         $actions['quote'] = array(
-            'url'  => add_query_arg( 'pdfid', $order->id, get_permalink( woocommerce_get_page_id( 'view_order' ) ) ),
-            'name' => __( apply_filters('woocommerce_pdf_my_account_button_label', __( 'PDF Quote', 'woocommerce-pdf-invoice' ) ) )
+            'url'  => add_query_arg( 'pdfid', $order->get_id(), get_permalink( wc_get_page_id( 'view_order' ) ) ),
+            'name' => __( apply_filters('woocommerce_quote_gateway_pdf_my_account_button_label', __( 'PDF Quote', 'woocommerce-pdf-invoice' ) ) )
         );
      
     endif;
